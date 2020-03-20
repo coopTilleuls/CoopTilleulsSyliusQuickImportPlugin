@@ -1,0 +1,13 @@
+# Delete these routes and define your own shop routes here
+
+coop_tilleuls_sylius_quick_import_static_welcome:
+    path: /static-welcome/{name}
+    defaults:
+        _controller: CoopTilleulsSyliusQuickImportPlugin:Greeting:staticallyGreet
+        name: ~
+
+coop_tilleuls_sylius_quick_import_dynamic_welcome:
+    path: /dynamic-welcome/{name}
+    defaults:
+        _controller: CoopTilleulsSyliusQuickImportPlugin:Greeting:dynamicallyGreet
+        name: ~

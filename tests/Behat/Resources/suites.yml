@@ -1,0 +1,10 @@
+# Put your Behat suites definitions here
+
+default:
+    suites:
+        greeting_customer:
+            contexts:
+                - coop_tilleuls_sylius_quick_import.context.ui.shop.welcome
+
+            filters:
+                tags: "@greeting_customer"
