@@ -1,0 +1,6 @@
+coop_tilleuls_quick_import_plugin:
+  ui:
+    title: Import catalog
+    subtitle: Import taxons and products on your catalog
+    breadcrumb_entry: Import
+    info: "Use <a href='#'>this sheet example</a> to provide a catalog compatible with the import process"

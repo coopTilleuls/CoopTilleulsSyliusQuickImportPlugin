@@ -1,0 +1,14 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+
+
+{% set pageTitle = 'coop_tilleuls_quick_import_plugin.ui.title'|trans %}
+
+{% block title %}{{ pageTitle }} {{ parent() }}{% endblock %}
+
+{% block content %}
+    {% include 'CoopTilleulsSyliusQuickImportPlugin:Header:_header.html.twig' with { pageTitle: pageTitle } %}
+
+
+
+{% endblock %}

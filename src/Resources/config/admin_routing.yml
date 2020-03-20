@@ -1,1 +1,5 @@
-# Define your own admin routes here
+coop_tilleuls_sylius_quick_import:
+  path: /quick-import
+  defaults:
+    _controller: coop_tilleuls.sylius_quick_import_plugin.controller.import_action
+    name: ~

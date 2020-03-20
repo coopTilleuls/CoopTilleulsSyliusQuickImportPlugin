@@ -1,0 +1,9 @@
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+        { label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+        { label: 'coop_tilleuls_quick_import_plugin.ui.breadcrumb_entry'|trans },
+    ]
+%}
+
+{{ breadcrumb.crumble(breadcrumbs) }}

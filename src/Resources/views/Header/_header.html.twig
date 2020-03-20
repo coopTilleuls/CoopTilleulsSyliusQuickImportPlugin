@@ -1,0 +1,12 @@
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+
+<div class="ui stackable column grid">
+    <div class="column">
+        {{ headers.default(pageTitle, 'sign in alternate', 'coop_tilleuls_quick_import_plugin.ui.subtitle'|trans) }}
+
+        {% include 'CoopTilleulsSyliusQuickImportPlugin:Header:_breadcrumb.html.twig' %}
+    </div>
+
+</div>
+
+{% include 'CoopTilleulsSyliusQuickImportPlugin:Header:_info.html.twig' %}
