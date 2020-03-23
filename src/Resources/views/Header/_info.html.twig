@@ -1,16 +1,16 @@
-{% macro info(message, icon, type, header) %}
-    <div class="ui icon {{ type|default('') }} message">
-        <i class="{{ icon }} icon"></i>
-        <div class="content">
-            {% if type is not empty %}
-                <div class="header">
-                    {{ header|default(type)|trans }}
-                </div>
-            {% endif %}
-            <p>{{ message|trans|raw }}</p>
-        </div>
-    </div>
-{% endmacro %}
+{% set filePath = '/bundles/cooptilleulssyliusquickimportplugin/' %}
 
-{% import _self as messages %}
-{{ messages.info('coop_tilleuls_quick_import_plugin.ui.info', 'info circle', 'info', 'sylius.ui.info') }}
+<div class="ui icon info message">
+    <i class="info circle icon"></i>
+    <div class="content">
+        <div class="header">
+            {{ 'sylius.ui.info'|trans }}
+        </div>
+        <p>{{ 'coop_tilleuls_quick_import_plugin.ui.info'|trans }}</p>
+        <ul>
+            <li><a href="{{ ( filePath ~ 'catalog.xlsx') }}" target="_blank">{{ 'coop_tilleuls_quick_import_plugin.ui.info_excel'|trans }}</a></li>
+            <li><a href="{{ ( filePath ~ 'catalog.odt') }}" target="_blank">{{ 'coop_tilleuls_quick_import_plugin.ui.info_odt'|trans }}</a></li>
+            <li><a href="{{ ( filePath ~ 'catalog.csv') }}" target="_blank">{{ 'coop_tilleuls_quick_import_plugin.ui.info_csv'|trans }}</a></li>
+        </ul>
+    </div>
+</div>
