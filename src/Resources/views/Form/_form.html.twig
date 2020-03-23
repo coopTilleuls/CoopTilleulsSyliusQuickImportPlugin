@@ -1,0 +1,20 @@
+{% form_theme form '@SyliusShop/Form/theme.html.twig' %}
+
+<div class="ui segment">
+    {{ form_start(form, {'action': path('coop_tilleuls_sylius_quick_import'), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+        {{ form_row(form._token) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_row(form.file) }}
+
+        <div class="ui basic segment">
+            <div class="ui buttons">
+                <button class="ui labeled loadable icon primary button" type="submit">
+                    <i class="icon sign in alternate"></i>
+                    {{ 'coop_tilleuls_quick_import_plugin.form.import'|trans }}
+                </button>
+            </div>
+        </div>
+    {{ form_end(form, {'render_rest': false}) }}
+</div>

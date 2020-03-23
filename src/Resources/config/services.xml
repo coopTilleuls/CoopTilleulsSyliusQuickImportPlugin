@@ -4,12 +4,21 @@
     <services>
         <service class="CoopTilleuls\SyliusQuickImportPlugin\Controller\ImportAction" id="coop_tilleuls.sylius_quick_import_plugin.controller.import_action" public="true">
             <argument id="twig" type="service"/>
+            <argument id="form.factory" type="service"/>
+            <argument id="translator.data_collector" type="service"/>
+            <argument id="coop_tilleuls.sylius_quick_import_plugin.service.importer" type="service" />
             <tag name="controller.service_arguments" />
         </service>
 
         <service class="CoopTilleuls\SyliusQuickImportPlugin\Listener\AdminMenuListener" id="coop_tilleuls.sylius_quick_import_plugin.listener.admin_menu_listener">
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="addAdminMenuItem" priority="-1" />
         </service>
+
+        <service class="CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType" id="coop_tilleuls.sylius_quick_import_plugin.form.import_type" public="true">
+            <tag alias="CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType" name="form.type"/>
+        </service>
+
+        <service class="CoopTilleuls\SyliusQuickImportPlugin\Service\Importer" id="coop_tilleuls.sylius_quick_import_plugin.service.importer" public="true"/>
 
     </services>
 </container>

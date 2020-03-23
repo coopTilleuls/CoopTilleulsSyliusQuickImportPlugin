@@ -4,6 +4,11 @@ coop_tilleuls_quick_import_plugin:
     subtitle: Import taxons and products on your catalog
     breadcrumb_entry: Import
     info: "Use those sheet examples to provide a catalog compatible with the import process:"
-    info_excel: "Excel version"
-    info_odt: "LibreOffice version"
-    info_csv: "CSV version"
+    info_excel: Excel version
+    info_odt: LibreOffice version
+    info_csv: CSV version
+  form:
+    catalog: Catalog
+    import: Import
+    error:
+      invalid_file: You have to provide a valid file to import (with XLSX, ODS or CSV extension)
