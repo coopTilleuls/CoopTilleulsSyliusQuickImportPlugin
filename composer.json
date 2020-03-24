@@ -1,8 +1,8 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "coopTilleuls/quick-import-plugin",
     "type": "sylius-plugin",
-    "keywords": ["sylius", "sylius-plugin"],
-    "description": "Plugin to import taxons(one level only) and products in Sylius.",
+    "keywords": ["sylius", "sylius-plugin", "import", "catalog"],
+    "description": "Plugin to import taxons (one level only) and products in Sylius.",
     "license": "MIT",
     "require": {
         "php": "^7.2",
