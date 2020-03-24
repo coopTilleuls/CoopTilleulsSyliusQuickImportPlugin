@@ -18,7 +18,18 @@
             <tag alias="CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType" name="form.type"/>
         </service>
 
-        <service class="CoopTilleuls\SyliusQuickImportPlugin\Service\Importer" id="coop_tilleuls.sylius_quick_import_plugin.service.importer" public="true"/>
+        <service class="CoopTilleuls\SyliusQuickImportPlugin\Service\Importer" id="coop_tilleuls.sylius_quick_import_plugin.service.importer" public="true">
+            <argument id="sylius.custom_factory.taxon" type="service"/>
+            <argument id="sylius.custom_factory.product" type="service"/>
+            <argument id="sylius.factory.channel_pricing" type="service"/>
+            <argument id="sylius.factory.product_taxon" type="service"/>
+            <argument id="sylius.repository.taxon" type="service"/>
+            <argument id="sylius.repository.product" type="service"/>
+            <argument id="sylius.context.channel" type="service" />
+            <argument id="sylius.generator.slug" type="service"/>
+            <argument id="fos_oauth_server.entity_manager" type="service"/>
+            <argument id="currentLocale" type="expression">service('sylius.context.locale').getLocaleCode()</argument>
+        </service>
 
     </services>
 </container>
