@@ -4,85 +4,47 @@
     </a>
 </p>
 
-<h1 align="center">Plugin Skeleton</h1>
+<h1 align="center">Sylius Quick Import Plugin</h1>
 
-<p align="center">Skeleton for starting Sylius plugins.</p>
+<p align="center">Plugin to quicky import taxons and products in Sylius catalog.</p>
+
+> :warning: This plugin is not a replacement for [SyliusImportExportPlugin][SyliusImportExportPlugin] which continue 
+> to be the best solution to import/export full catalog for Sylius.
+
+## Context
+
+This plugin has been written during the COVID-19 pandemic. The goal was to allow shoppers to build quick website and 
+to import catalog without effort.
+
+## When using it?
+
+- you need to import one level of taxons.
+- you need to import simple product (code, name, description, main taxon, price, stock).
+- that's it. If you need more, you should use [SyliusImportExportPlugin][SyliusImportExportPlugin].
 
 ## Installation
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
+1. Run `composer require coopTilleuls/quick-import-plugin`.
 
-2. From the plugin skeleton root directory, run the following commands:
+2. Add plugin dependency to your `config/bundles.php`:
 
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn build)
-    $ (cd tests/Application && bin/console assets:install public -e test)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
+    ```php
+    return [
+        ...
+        CoopTilleuls\SyliusQuickImportPlugin\CoopTilleulsSyliusQuickImportPlugin::class => ['all' => true],
+    ];
     ```
-
-To be able to setup a plugin's database, remember to configure you database credentials in `tests/Application/.env` and `tests/Application/.env.test`.
+    
+3. Import the routing in your `config/routes.yaml`
+    ```yaml
+    coop_tilleuls_sylius_quick_import_admin:
+        resource: "@CoopTilleulsSyliusQuickImportPlugin/Resources/config/admin_routing.yml"
+        prefix: /admin
+    ```
 
 ## Usage
 
-### Running plugin tests
+You can find a new entry "Import catalog" in your admin menu. In these section you can download spreadsheet examples 
+and import a catalog which respect this schema.
 
-  - PHPUnit
-
-    ```bash
-    $ vendor/bin/phpunit
-    ```
-
-  - PHPSpec
-
-    ```bash
-    $ vendor/bin/phpspec run
-    ```
-
-  - Behat (non-JS scenarios)
-
-    ```bash
-    $ vendor/bin/behat --tags="~@javascript"
-    ```
-
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/).
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
-        ```
-        
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run localhost:8080 -d public -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ vendor/bin/behat --tags="@javascript"
-        ```
-
-### Opening Sylius with your plugin
-
-- Using `test` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d public -e test)
-    ```
-    
-- Using `dev` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d public -e dev)
-    ```
+[SyliusImportExportPlugin]: https://github.com/FriendsOfSylius/SyliusImportExportPlugin
