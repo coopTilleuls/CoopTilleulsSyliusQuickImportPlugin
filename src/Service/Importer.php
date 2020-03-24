@@ -147,10 +147,10 @@ class Importer
 
             if (!array_key_exists($category, $list)) {
                 $taxon = $this->addTaxon($category);
-                $list[$category] = ['category' => $taxon, 'products' => []];
+                $list[$category] = ['taxon' => $taxon, 'products' => []];
             } else {
                 /** @var TaxonInterface $cat */
-                $taxon = $list[$category]['category'];
+                $taxon = $list[$category]['taxon'];
             }
 
             $list[$category]['products'][] = $this->addOrGetProduct($row, $taxon);
@@ -171,6 +171,7 @@ class Importer
             return $taxon;
         }
 
+        /** @var TaxonInterface $taxon */
         $taxon = $this->taxonFactory->createNew();
         $taxon->setCurrentLocale($this->currentLocale);
         $taxon->setCode($name);

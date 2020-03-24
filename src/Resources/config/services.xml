@@ -6,6 +6,7 @@
             <argument id="twig" type="service"/>
             <argument id="form.factory" type="service"/>
             <argument id="translator.data_collector" type="service"/>
+            <argument id="session.flash_bag" type="service"/>
             <argument id="coop_tilleuls.sylius_quick_import_plugin.service.importer" type="service" />
             <tag name="controller.service_arguments" />
         </service>

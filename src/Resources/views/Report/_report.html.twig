@@ -1,0 +1,33 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+{% import _self as helper %}
+
+{% macro render_product(product) %}
+    <li>
+        <a href="{{ path('sylius_admin_product_update', {'id': product.id}) }}" target="_blank">{{ product.name }}</a> :
+        {{ money.calculatePrice(product|sylius_resolve_variant) }}
+    </li>
+{% endmacro %}
+
+{% macro render_taxon(row) %}
+    <h4>{{ row.taxon.name }}</h4>
+    <ul>
+        {% for product in row.products %}
+            {{ helper.render_product(product) }}
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% if report is not empty %}
+    <div class="ui hidden divider"></div>
+    <div class="ui styled fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            {{ 'coop_tilleuls_quick_import_plugin.ui.report'|trans }}
+        </div>
+        <div class="content">
+            {% for row in report %}
+                {{ helper.render_taxon(row) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

@@ -39,11 +39,12 @@ class ImportAction
      */
     private $translator;
 
-    public function __construct(Environment $twig, FormFactoryInterface $formFactory, TranslatorInterface $translator, Importer $importer)
+    public function __construct(Environment $twig, FormFactoryInterface $formFactory, TranslatorInterface $translator, FlashBagInterface $flashBag, Importer $importer)
     {
         $this->twig = $twig;
         $this->formFactory = $formFactory;
         $this->translator = $translator;
+        $this->flashBag = $flashBag;
         $this->importer = $importer;
     }
 
@@ -55,19 +56,20 @@ class ImportAction
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->importer->import($form->get('file')->getData());
+                $report = $this->importer->import($form->get('file')->getData());
+                $this->flashBag->add('success', $this->translator->trans('coop_tilleuls_quick_import_plugin.form.success'));
             } catch (ImporterException $exception) {
-                $form->get('file')->addError(new FormError($this->translator->trans('coop_tilleuls_quick_import_plugin.form.error.invalid_file')));
+                dump($exception);
+                $form->get('file')->addError(new FormError($this->translator->trans('coop_tilleuls_quick_import_plugin.form.invalid_file')));
             }
 
         }
 
         $content = $this->twig->render('CoopTilleulsSyliusQuickImportPlugin::import.html.twig', [
             'form' => $form->createView(),
+            'report' => $report ?? [],
         ]);
 
         return new Response($content);
     }
-
-
 }
