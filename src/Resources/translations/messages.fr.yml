@@ -1,0 +1,15 @@
+coop_tilleuls_quick_import_plugin:
+  ui:
+    title: Import de catalogue
+    subtitle: Importer vos taxons et produits dans votre catalogue
+    breadcrumb_entry: Import
+    info: "Utiliser ces exemples de tableur pour fournir un fichier compatible avec le processus d'import :"
+    info_excel: version Excel
+    info_ods: version LibreOffice
+    info_csv: version CSV
+    report: Rapport d'importation
+  form:
+    catalog: Catalogue
+    import: Importer
+    success: Votre catalogue a été importé avec succès.
+    invalid_file: Vous devez fournir un fichier valide pour l'import (avec une extesion XLSX, ODS ou CSV). Appuyez-vous sur les exemples fournis plus haut.
