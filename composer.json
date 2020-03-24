@@ -1,5 +1,5 @@
 {
-    "name": "coopTilleuls/quick-import-plugin",
+    "name": "tilleuls/sylius-quick-import-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin", "import", "catalog"],
     "description": "Plugin to import taxons (one level only) and products in Sylius.",

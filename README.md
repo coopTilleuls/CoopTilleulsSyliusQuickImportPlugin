@@ -24,7 +24,7 @@ to import catalog without effort.
 
 ## Installation
 
-1. Run `composer require coopTilleuls/quick-import-plugin`.
+1. Run `composer require tilleuls/sylius-quick-import-plugin`.
 
 2. Add plugin dependency to your `config/bundles.php`:
 
