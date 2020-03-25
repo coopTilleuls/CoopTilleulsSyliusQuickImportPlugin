@@ -59,7 +59,6 @@ class ImportAction
                 $report = $this->importer->import($form->get('file')->getData());
                 $this->flashBag->add('success', $this->translator->trans('coop_tilleuls_quick_import_plugin.form.success'));
             } catch (ImporterException $exception) {
-                dump($exception);
                 $form->get('file')->addError(new FormError($this->translator->trans('coop_tilleuls_quick_import_plugin.form.invalid_file')));
             }
 
