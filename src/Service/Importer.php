@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CoopTilleuls\SyliusQuickImportPlugin\Service;
 
-
 use CoopTilleuls\SyliusQuickImportPlugin\Exception\InvalidFileExtensionException;
 use CoopTilleuls\SyliusQuickImportPlugin\Exception\InvalidFileFormatException;
 use CoopTilleuls\SyliusQuickImportPlugin\Exception\MissingDataException;
@@ -12,6 +11,8 @@ use CoopTilleuls\SyliusQuickImportPlugin\Exception\MissingFileException;
 use CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType;
 use Doctrine\ORM\EntityManager;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Sylius\Bundle\ProductBundle\Doctrine\ORM\ProductRepository;
+use Sylius\Bundle\TaxonomyBundle\Doctrine\ORM\TaxonRepository;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -21,7 +22,6 @@ use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Product\Factory\ProductFactoryInterface;
 use Sylius\Component\Product\Generator\SlugGeneratorInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Taxonomy\Factory\TaxonFactoryInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -44,11 +44,11 @@ class Importer
      */
     private $productTaxonFactory;
     /**
-     * @var RepositoryInterface
+     * @var TaxonRepository
      */
     private $taxonRepository;
     /**
-     * @var RepositoryInterface
+     * @var ProductRepository
      */
     private $productRepository;
     /**
@@ -73,8 +73,8 @@ class Importer
         ProductFactoryInterface $productFactory,
         FactoryInterface $channelPricingFactory,
         FactoryInterface $productTaxonFactory,
-        RepositoryInterface $taxonRepository,
-        RepositoryInterface $productRepository,
+        TaxonRepository $taxonRepository,
+        ProductRepository $productRepository,
         ChannelContextInterface $channelContext,
         SlugGeneratorInterface $slugGenerator,
         EntityManager $em,
@@ -93,9 +93,15 @@ class Importer
         $this->currentLocale = $currentLocale;
     }
 
+    /**
+     * @throws InvalidFileExtensionException
+     * @throws InvalidFileFormatException
+     * @throws MissingDataException
+     * @throws MissingFileException
+     */
     public function import(UploadedFile $file = null): array
     {
-        if (null === $file) {
+        if (null === $file || false === $realPath = $file->getRealPath()) {
             throw new MissingFileException('File is missing.');
         }
 
@@ -104,7 +110,7 @@ class Importer
             throw new InvalidFileExtensionException('Invalid file extension.');
         }
 
-        $data = $this->extractData($file->getRealPath());
+        $data = $this->extractData($realPath);
         $formattedData = $this->doImport($data);
 
         if (!\count($formattedData)) {
@@ -174,6 +180,7 @@ class Importer
             return $taxon;
         }
 
+        /** @var TaxonInterface $taxon */
         $taxon = $this->taxonFactory->createNew();
         $taxon->setCurrentLocale($this->currentLocale);
         $taxon->setCode($name);

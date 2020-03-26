@@ -13,6 +13,10 @@ class AdminMenuListener
         $menu = $event->getMenu();
         $catalog = $menu->getChild('catalog');
 
+        if (null === $catalog) {
+            return;
+        }
+
         $catalog
             ->addChild('quick-import', ['route' => 'coop_tilleuls_sylius_quick_import'])
             ->setLabel('coop_tilleuls_quick_import_plugin.ui.title')
