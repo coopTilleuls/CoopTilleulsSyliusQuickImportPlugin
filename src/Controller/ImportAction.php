@@ -7,7 +7,6 @@ namespace CoopTilleuls\SyliusQuickImportPlugin\Controller;
 use CoopTilleuls\SyliusQuickImportPlugin\Exception\ImporterException;
 use CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType;
 use CoopTilleuls\SyliusQuickImportPlugin\Service\Importer;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,7 +60,6 @@ class ImportAction
             } catch (ImporterException $exception) {
                 $form->get('file')->addError(new FormError($this->translator->trans('coop_tilleuls_quick_import_plugin.form.invalid_file')));
             }
-
         }
 
         $content = $this->twig->render('CoopTilleulsSyliusQuickImportPlugin::import.html.twig', [

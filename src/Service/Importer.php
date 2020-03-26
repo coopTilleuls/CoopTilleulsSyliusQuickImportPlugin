@@ -198,6 +198,8 @@ class Importer
     protected function addOrGetProduct(array $row, TaxonInterface $taxon): ProductInterface
     {
         [$reference, $name, , $price, $stock, $description] = $row;
+        // $reference should always be a string but if the reference used by the shop owner is a integer (an ISBN book for example)  it will throw an error
+        $reference = (string) $reference;
 
         $product = $this->productRepository->findOneByCode($reference);
 
