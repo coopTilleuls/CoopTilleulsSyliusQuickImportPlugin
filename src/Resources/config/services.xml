@@ -8,6 +8,7 @@
             <argument id="translator.data_collector" type="service"/>
             <argument id="session.flash_bag" type="service"/>
             <argument id="coop_tilleuls.sylius_quick_import_plugin.service.importer" type="service" />
+            <argument id="coop_tilleuls.sylius_quick_import_plugin.factory.form_error_factory" type="service" />
             <tag name="controller.service_arguments" />
         </service>
 
@@ -17,6 +18,10 @@
 
         <service class="CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType" id="coop_tilleuls.sylius_quick_import_plugin.form.import_type" public="true">
             <tag alias="CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType" name="form.type"/>
+        </service>
+
+        <service class="CoopTilleuls\SyliusQuickImportPlugin\Factory\FormErrorFactory" id="coop_tilleuls.sylius_quick_import_plugin.factory.form_error_factory" public="true">
+            <argument id="translator.data_collector" type="service"/>
         </service>
 
         <service class="CoopTilleuls\SyliusQuickImportPlugin\Service\Importer" id="coop_tilleuls.sylius_quick_import_plugin.service.importer" public="true">

@@ -12,4 +12,8 @@ coop_tilleuls_quick_import_plugin:
     catalog: Catalogue
     import: Importer
     success: Votre catalogue a été importé avec succès.
-    invalid_file: Vous devez fournir un fichier valide pour l'import (avec une extesion XLSX, ODS ou CSV). Appuyez-vous sur les exemples fournis plus haut.
+    invalid_file: Vous devez fournir un fichier valide pour l'import (avec une extension XLSX, ODS ou CSV). Appuyez-vous sur les exemples fournis plus haut.
+    invalid_file_extension: Vous devez fournir un fichier avec une extension XLSX, ODS ou CSV. Appuyez-vous sur les exemples fournis plus haut.
+    invalid_file_format: Le fichier envoyé ne respect pas le format. Appuyez-vous sur les exemples fournis plus haut.
+    missing_data: Le fichier envoyé semble vide. Appuyez-vous sur les exemples fournis plus haut.
+    missing_file: Aucun fichier n'a été envoyé. Appuyez-vous sur les exemples fournis plus haut.

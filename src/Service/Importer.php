@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace CoopTilleuls\SyliusQuickImportPlugin\Service;
 
 
-use CoopTilleuls\SyliusQuickImportPlugin\Exception\ImporterException;
+use CoopTilleuls\SyliusQuickImportPlugin\Exception\InvalidFileExtensionException;
+use CoopTilleuls\SyliusQuickImportPlugin\Exception\InvalidFileFormatException;
+use CoopTilleuls\SyliusQuickImportPlugin\Exception\MissingDataException;
+use CoopTilleuls\SyliusQuickImportPlugin\Exception\MissingFileException;
 use CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType;
 use Doctrine\ORM\EntityManager;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -93,19 +96,19 @@ class Importer
     public function import(UploadedFile $file = null): array
     {
         if (null === $file) {
-            throw new ImporterException('File is missing.');
+            throw new MissingFileException('File is missing.');
         }
 
-        $extension = strtolower(array_slice(explode('.', $file->getClientOriginalName()), -1)[0]);
+        $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
         if (!in_array(\sprintf('.%s', $extension), ImportType::ALLOWED_EXTENSIONS, true)) {
-            throw new ImporterException('Invalid file extension.');
+            throw new InvalidFileExtensionException('Invalid file extension.');
         }
 
         $data = $this->extractData($file->getRealPath());
         $formattedData = $this->doImport($data);
 
         if (!\count($formattedData)) {
-            throw new ImporterException('File is empty.');
+            throw new MissingDataException('File is empty.');
         }
 
         return $formattedData;
@@ -118,7 +121,7 @@ class Importer
         $max = $sheet->getHighestRowAndColumn();
 
         if ('F' !== $max['column']) {
-            throw new ImporterException('Wrong file schema.');
+            throw new InvalidFileFormatException('Wrong file format.');
         }
 
         return $sheet->rangeToArray(
@@ -126,7 +129,6 @@ class Importer
             null,
             true,
             true
-
         );
     }
 
@@ -149,7 +151,7 @@ class Importer
                 $taxon = $this->addTaxon($category);
                 $list[$category] = ['taxon' => $taxon, 'products' => []];
             } else {
-                /** @var TaxonInterface $cat */
+                /** @var TaxonInterface $taxon */
                 $taxon = $list[$category]['taxon'];
             }
 
@@ -165,13 +167,13 @@ class Importer
 
     protected function addTaxon(string $name): TaxonInterface
     {
+        /** @var null|TaxonInterface $taxon */
         $taxon = $this->taxonRepository->findOneByCode($name);
 
         if (null !== $taxon) {
             return $taxon;
         }
 
-        /** @var TaxonInterface $taxon */
         $taxon = $this->taxonFactory->createNew();
         $taxon->setCurrentLocale($this->currentLocale);
         $taxon->setCode($name);

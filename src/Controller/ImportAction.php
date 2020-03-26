@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CoopTilleuls\SyliusQuickImportPlugin\Controller;
 
 use CoopTilleuls\SyliusQuickImportPlugin\Exception\ImporterException;
+use CoopTilleuls\SyliusQuickImportPlugin\Factory\FormErrorFactoryInterface;
 use CoopTilleuls\SyliusQuickImportPlugin\Form\ImportType;
 use CoopTilleuls\SyliusQuickImportPlugin\Service\Importer;
 use Symfony\Component\Form\FormError;
@@ -37,14 +38,19 @@ class ImportAction
      * @var TranslatorInterface
      */
     private $translator;
+    /**
+     * @var FormErrorFactoryInterface
+     */
+    private $formErrorFactory;
 
-    public function __construct(Environment $twig, FormFactoryInterface $formFactory, TranslatorInterface $translator, FlashBagInterface $flashBag, Importer $importer)
+    public function __construct(Environment $twig, FormFactoryInterface $formFactory, TranslatorInterface $translator, FlashBagInterface $flashBag, Importer $importer, FormErrorFactoryInterface $formErrorFactory)
     {
         $this->twig = $twig;
         $this->formFactory = $formFactory;
         $this->translator = $translator;
         $this->flashBag = $flashBag;
         $this->importer = $importer;
+        $this->formErrorFactory = $formErrorFactory;
     }
 
     public function __invoke(Request $request): Response
@@ -58,7 +64,7 @@ class ImportAction
                 $report = $this->importer->import($form->get('file')->getData());
                 $this->flashBag->add('success', $this->translator->trans('coop_tilleuls_quick_import_plugin.form.success'));
             } catch (ImporterException $exception) {
-                $form->get('file')->addError(new FormError($this->translator->trans('coop_tilleuls_quick_import_plugin.form.invalid_file')));
+                $form->get('file')->addError($this->formErrorFactory->buildFormErrorByException($exception));
             }
         }
 
