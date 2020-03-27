@@ -24,7 +24,7 @@ class FormErrorFactory implements FormErrorFactoryInterface
         $this->translator = $translator;
     }
 
-    public function buildFormErrorByException(ImporterException $exception)
+    public function buildFormErrorByException(ImporterException $exception): FormError
     {
         switch (get_class($exception)) {
             case InvalidFileExtensionException::class:

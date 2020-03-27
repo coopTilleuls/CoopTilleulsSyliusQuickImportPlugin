@@ -3,9 +3,21 @@ Feature: Importing a simple catalog of product
   Background:
     Given I am logged in as an administrator
 
-  Scenario: As a shop administrator I can upload a file to import my catalog
+  Scenario: As a shop administrator I can upload a csv file to import my catalog
     Given I am on "/admin/quick-import"
     When I attach the file "catalog.csv" to "import_file"
+    And I press "Import"
+    Then I should see "Your catalog has been imported with success."
+
+  Scenario: As a shop administrator I can upload a ods file to import my catalog
+    Given I am on "/admin/quick-import"
+    When I attach the file "catalog.ods" to "import_file"
+    And I press "Import"
+    Then I should see "Your catalog has been imported with success."
+
+  Scenario: As a shop administrator I can upload a xlsx file to import my catalog
+    Given I am on "/admin/quick-import"
+    When I attach the file "catalog.xlsx" to "import_file"
     And I press "Import"
     Then I should see "Your catalog has been imported with success."
 
@@ -26,7 +38,7 @@ Feature: Importing a simple catalog of product
     And I press "Import"
     Then I should see "The file sent does not respect the good format. Use the examples provided above."
 
-  Scenario: As a shop administrator I have meaningful error if I submit the form with an invalid file format
+  Scenario: As a shop administrator I have meaningful error if I submit the form with an empty file
     Given I am on "/admin/quick-import"
     When I attach the file "empty_catalog.csv" to "import_file"
     And I press "Import"
