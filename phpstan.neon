@@ -3,6 +3,9 @@ includes:
     - vendor/phpstan/phpstan-webmozart-assert/extension.neon
 
 parameters:
+    level: 7
+    paths:
+        - src
     reportUnmatchedIgnoredErrors: false
 
     excludes_analyse:
