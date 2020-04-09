@@ -8,7 +8,7 @@
 
 <p align="center">Plugin to quicky import taxons and products in Sylius catalog.</p>
 
-> :warning: This plugin is not a replacement for [SyliusImportExportPlugin][SyliusImportExportPlugin] which continue 
+> :warning: This plugin is not a replacement for [SyliusImportExportPlugin][SyliusImportExportPlugin] which continues 
 > to be the best solution to import/export full catalog for Sylius.
 
 ## Context
